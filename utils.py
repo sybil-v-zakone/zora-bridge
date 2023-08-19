@@ -41,7 +41,7 @@ def generate_pairs() -> dict:
 
 
 def get_bridge_amount() -> float:
-    amount_to_bridge = round(random.uniform(*amount_range), 4)
+    amount_to_bridge = round(random.uniform(*amount_range), 5)
     return amount_to_bridge
 
 

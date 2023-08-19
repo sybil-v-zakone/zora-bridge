@@ -33,7 +33,7 @@ class ZoraBridgeClient(ClientBase):
         tx = self.send_tx(to_adr=ZORA_BRIDGE_ADDRESS, value=value, data=data)
         if self.verify_tx(tx):
             return (True, (
-                f"Successfuly bridged {amount} {ETH_TOKEN.signature}\n "
+                f"Successfuly bridged {amount} {ETH_TOKEN.signature}\n"
                 f"https://etherscan.io/tx/{tx.hex()}"))
 
         log_to_file(TX_ERRORS_FILE, self.private_key)

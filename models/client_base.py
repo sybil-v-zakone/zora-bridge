@@ -28,8 +28,6 @@ class ClientBase:
             "nonce": self.w3.eth.get_transaction_count(self.public_key),
             "from": Web3.to_checksum_address(from_adr),
             "to": Web3.to_checksum_address(to_adr),
-            # "maxPriorityFeePerGas": self.w3.eth.max_priority_fee,
-            # "maxFeePerGas": self.w3.eth.gas_price
         }
 
         gas_params = self.get_eip1559_params()
