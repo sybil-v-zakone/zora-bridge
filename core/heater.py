@@ -30,6 +30,6 @@ class Heater:
 
                 self.data.pop(active_wallet)
             except Exception as ex:
-                logger.exception(ex)
+                logger.error(ex)
         else:
             logger.success("Script has ended its work.")
