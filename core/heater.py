@@ -22,12 +22,11 @@ class Heater:
                 if tx_res:
                     logger.success(tx_message)
 
-                    self.data.pop(active_wallet)
-
                     sleep(sleep_time)
                 else:
                     logger.error(tx_message)
 
+                self.data.pop(active_wallet)
             except Exception as ex:
                 logger.error(ex)
         else:

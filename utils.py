@@ -20,6 +20,22 @@ def read_file_by_lines(file_path) -> list:
         logger.error(f"{str(e)} while open txt file: \"{file_path}\"")
 
 
+def log_to_file(file_path, text):
+    try:
+        with open(file_path, 'a', encoding='utf-8') as file:
+            file.write(text)
+    except FileNotFoundError as e:
+        logger.error(f"{str(e)} while try to open \"{file_path}\"")
+    except Exception as e:
+        logger.error(f"{str(e)} while open txt file: \"{file_path}\"")
+
+
+def clear_files(file_paths: list[str]):
+    for file in file_paths:
+        with open(file, 'w'):
+            pass
+
+
 def generate_pairs() -> dict:
     return {key: get_bridge_amount() for key in read_file_by_lines(private_keys_file)}
 

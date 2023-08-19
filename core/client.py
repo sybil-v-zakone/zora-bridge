@@ -1,8 +1,7 @@
 from models.client_base import ClientBase
 from utils import *
 from constants import *
-import random
-from config import gas_threshold, gas_delay_range
+from config import gas_threshold, gas_delay_range, low_balances_file, tx_errors_file
 
 
 class ZoraBridgeClient(ClientBase):
@@ -20,6 +19,7 @@ class ZoraBridgeClient(ClientBase):
 
         eth_balance = ETH_TOKEN.from_wei(self.w3.eth.get_balance(self.public_key))
         if eth_balance < amount:
+            log_to_file(low_balances_file, self.private_key)
             return False, f"Insufficient balance to bridge: {eth_balance} < {amount} \nSkipping wallet"
 
         data = self.zora_bridge.encodeABI('depositTransaction', args=(
@@ -35,4 +35,6 @@ class ZoraBridgeClient(ClientBase):
             return (True, (
                 f"Successfuly bridged {amount} {ETH_TOKEN.signature}\n "
                 f"https://etherscan.io/tx/{tx.hex()}"))
+
+        log_to_file(tx_errors_file, self.private_key)
         return False, f"Failed to bridge {amount} {ETH_TOKEN.signature} "
