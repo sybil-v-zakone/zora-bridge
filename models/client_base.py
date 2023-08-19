@@ -4,7 +4,8 @@ from web3.middleware import geth_poa_middleware
 from models.token import Token
 from loguru import logger
 from utils import sleep
-from config import eth_rpc
+from config import eth_rpc, gas_multiplier
+
 
 class ClientBase:
     def __init__(self, rpc: str, private_key: str):
@@ -17,7 +18,6 @@ class ClientBase:
             to_adr: str,
             from_adr: str = None,
             data=None,
-            gas_multiplier=1.05,
             value=None
     ):
         if not from_adr:
@@ -32,7 +32,7 @@ class ClientBase:
             # "maxFeePerGas": self.w3.eth.gas_price
         }
 
-        gas_params = self.get_eip1559_params(gas_multiplier)
+        gas_params = self.get_eip1559_params()
         txn['maxPriorityFeePerGas'] = gas_params[0]
         txn['maxFeePerGas'] = gas_params[1]
 
@@ -51,7 +51,7 @@ class ClientBase:
         sign = self.w3.eth.account.sign_transaction(txn, self.private_key)
         return self.w3.eth.send_raw_transaction(sign.rawTransaction)
 
-    def get_eip1559_params(self, gas_multiplier) -> tuple[int, int]:
+    def get_eip1559_params(self) -> tuple[int, int]:
         w3 = Web3(provider=Web3.HTTPProvider(endpoint_uri=eth_rpc))
         w3.middleware_onion.inject(geth_poa_middleware, layer=0)
         last_block = w3.eth.get_block("latest")

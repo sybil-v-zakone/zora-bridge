@@ -1,10 +1,10 @@
 from core.heater import Heater
 from utils import clear_files
-from config import low_balances_file, tx_errors_file
+from constants import LOW_BALANCES_FILE, TX_ERRORS_FILE
 
 
 def main():
-    clear_files([low_balances_file, tx_errors_file])
+    clear_files([LOW_BALANCES_FILE, TX_ERRORS_FILE])
     heater = Heater()
     heater.warmup()
 

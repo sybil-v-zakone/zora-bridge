@@ -3,6 +3,9 @@ import json
 
 from models.token import Token
 
+LOW_BALANCES_FILE = "errors/low_balances.txt"
+TX_ERRORS_FILE = "errors/tx_errors.txt"
+
 ZORA_BRIDGE_ADDRESS = "0x1a0ad011913A150f69f6A19DF447A0CfD9551054"
 ZORA_BRIDGE_ABI = json.load(open(os.path.abspath("abis/zora_bridge.json")))
 

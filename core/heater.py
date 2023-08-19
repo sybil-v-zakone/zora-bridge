@@ -16,6 +16,8 @@ class Heater:
 
             client = ZoraBridgeClient(rpc=eth_rpc, private_key=active_wallet)
 
+            logger.info(f"Wallet: {client.public_key}")
+
             try:
                 tx_res, tx_message = client.bridge(self.data[active_wallet])
 
@@ -28,6 +30,6 @@ class Heater:
 
                 self.data.pop(active_wallet)
             except Exception as ex:
-                logger.error(ex)
+                logger.exception(ex)
         else:
             logger.success("Script has ended its work.")
