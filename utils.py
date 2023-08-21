@@ -23,6 +23,8 @@ def read_file_by_lines(file_path) -> list:
 def log_to_file(file_path, text):
     try:
         with open(file_path, 'a', encoding='utf-8') as file:
+            if file.tell() > 0:
+                file.write('\n')
             file.write(text)
     except FileNotFoundError as e:
         logger.error(f"{str(e)} while try to open \"{file_path}\"")
